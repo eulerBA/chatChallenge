@@ -6,6 +6,9 @@ public class Page {
 
     WebDriver driver;
 
+    public Page(){
+    };
+
     public Page(WebDriver driver){
         this.driver=driver;
     }

@@ -12,6 +12,7 @@ public class BaseTest {
 
     WebDriver driver;
     Page page;
+    public static String baseUrl = "https://chatchallengeproj.herokuapp.com/";
 
     @BeforeTest
     public void setup(){
@@ -19,7 +20,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         this.page = new Page(driver);
 
-        page.navigateTo("https://chatchallengeproj.herokuapp.com/");
+        page.navigateTo(baseUrl);
     }
 
     @AfterTest

@@ -1,23 +1,23 @@
-package WebElements;
+package Utils;
 
+import com.sun.istack.internal.NotNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class MyWebElement{
+public class WebElement {
 
-    public static void click(WebDriver driver, By by) {
+    public static void waitAndClickElement(WebDriver driver, By by) {
         try {
             (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
             driver.findElement(by).click();}
     catch (StaleElementReferenceException sere) {
-                // simply retry finding the element in the refreshed DOM
                 driver.findElement(by).click();
             }
     catch (TimeoutException toe) {
-                //test.log(logStatus.Error, "Element identified by " + by.toString() + " was not clickable after 10 seconds");
+                System.out.println("Element identified by " + by.toString() + " was not clickable after 10 seconds");
             }
     }
 
@@ -25,8 +25,15 @@ public class MyWebElement{
 
     }
 
-    public void sendKeys(CharSequence... keysToSend) {
+    public static void sendKeys(WebDriver driver, By by, CharSequence... keysToSend) {
+        try{
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(by));
+        driver.findElement(by).sendKeys(keysToSend);
+        } catch (IllegalArgumentException iae){
 
+        }catch (TimeoutException toe) {
+            System.out.println("Element identified by " + by.toString() + " was not visible after 10 seconds");
+        }
     }
 
     public void clear() {
@@ -49,15 +56,15 @@ public class MyWebElement{
         return false;
     }
 
-    public String getText() {
+    public static String getText(WebDriver driver, By by) {
+        return driver.findElement(by).getText();
+    }
+
+    public List<org.openqa.selenium.WebElement> findElements(By by) {
         return null;
     }
 
-    public List<WebElement> findElements(By by) {
-        return null;
-    }
-
-    public WebElement findElement(By by) {
+    public org.openqa.selenium.WebElement findElement(By by) {
         return null;
     }
 

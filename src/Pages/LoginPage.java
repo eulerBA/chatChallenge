@@ -1,6 +1,6 @@
 package Pages;
 
-import WebElements.MyWebElement;
+import Utils.WebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,26 +10,33 @@ public class LoginPage extends Page {
 
     By loginUsernameField = By.cssSelector("form.login-form input[name='username']");
     By loginPasswordField = By.cssSelector("form.login-form input[name='password']");
+    By loginButton = By.cssSelector("form.login-form button");
     By registerUsernameField = By.cssSelector("form.register-form input[name='username']");
     By registerPasswordField = By.cssSelector("form.register-form input[name='password']");
     By registerCreateButton = By.cssSelector("form.register-form button");
-    By createNewUserLink = By.xpath("//a[contains(.,\'Create\')]");
+    By createNewUserLink = By.cssSelector("form.login-form a");
 
-    public LoginPage(){
-        super();
+    public LoginPage(WebDriver driver){
+        super(driver);
     }
 
-    public void loginUser(String username, String password)
+    public HomePage login(String username, String password)
     {
-        this.driver.findElement(loginUsernameField).sendKeys(username);
-        this.driver.findElement(loginPasswordField).sendKeys(username);
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
+        WebElement.sendKeys(driver, loginUsernameField,username);
+        WebElement.sendKeys(driver, loginPasswordField,password);
+        WebElement.waitAndClickElement(driver,loginButton);
+
+        (new WebDriverWait(driver, 5)).until(ExpectedConditions.textToBe(By.cssSelector("a.logout-btn"),"LOGOUT"));
+        return new HomePage(driver);
     }
 
     public LoginPage createNewUser(String username, String password){
-        MyWebElement.click(driver,createNewUserLink);
-        driver.findElement(registerUsernameField).sendKeys(username);
-        driver.findElement(registerPasswordField).sendKeys(password);
-        MyWebElement.click(driver,registerCreateButton);
+        WebElement.waitAndClickElement(driver,createNewUserLink);
+        WebElement.sendKeys(driver, registerUsernameField,username);
+        WebElement.sendKeys(driver, registerPasswordField,password);
+        WebElement.waitAndClickElement(driver,registerCreateButton);
         (new WebDriverWait(driver, 5)).until(ExpectedConditions.textToBe(By.cssSelector("p.message.success"),"Your account has been created. Please log in."));
         return this;
     }

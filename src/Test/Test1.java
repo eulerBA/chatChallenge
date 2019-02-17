@@ -87,7 +87,7 @@ public class Test1 extends BaseTest{
         Assert.assertFalse(chatRoomPage2.isDuplicated(message2),"Message: " + message2 + "is duplicated");
 
         chatRoomPage2.sendMessage(message1);
-        Assert.assertFalse(chatRoomPage2.isDuplicated(message1),"Message: " + message1 + "is duplicated");
+        Assert.assertTrue(chatRoomPage2.isDuplicated(message1),"Message: " + message1 + "is duplicated but could not find it");
     }
 
     //@Test

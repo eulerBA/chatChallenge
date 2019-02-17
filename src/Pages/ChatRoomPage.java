@@ -33,4 +33,12 @@ public class ChatRoomPage extends Page {
     public String getMessageByPosition(int pos){
         return WebElement.getText(driver, By.xpath("//div[@class='chat-history']//li["+pos+"]/div[not(@class='message-data')]"));
     }
+
+    public int getAmountOfMessages() {
+        return driver.findElements(By.xpath("//div[@class='chat-history']//li")).size();
+    }
+
+    public boolean isDuplicated(String msg) {
+        return driver.findElements(By.xpath("//div[@class='chat-history']//li/div[not(@class='message-data') and contains(.,"+msg+")]")).size()>1;
+    }
 }

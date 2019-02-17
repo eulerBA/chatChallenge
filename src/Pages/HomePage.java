@@ -28,6 +28,7 @@ public class HomePage extends Page {
     public ChatRoomPage enterToRoom(String r) {
         WebElement.waitAndClickElement(driver,By.xpath("//li[text()='"+ r +"']"));
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.numberOfElementsToBeMoreThan(chatRoom, 0));
+        sleep(3000);
         return new ChatRoomPage(driver);
 
     }

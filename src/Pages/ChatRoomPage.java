@@ -43,7 +43,7 @@ public class ChatRoomPage extends Page {
     }
 
     public boolean isDuplicated(String msg) {
-        List<org.openqa.selenium.WebElement> elements = driver.findElements(By.xpath("//div[@class='chat-history']//li/div[not(@class='message-data')]"));
+        List<org.openqa.selenium.WebElement> elements = WebElement.findElements(driver,By.xpath("//div[@class='chat-history']//li/div[not(@class='message-data')]"));
         int count = 0;
         if (elements.size() > 0) {
             Iterator<org.openqa.selenium.WebElement> it = elements.iterator();
@@ -52,9 +52,10 @@ public class ChatRoomPage extends Page {
                  e = (org.openqa.selenium.WebElement) it.next();
                 if (e.getText().equals(msg)) {
                     count++;
+                    if (count > 1) return true;
                 };
             }
         }
-     return count > 1;
+     return false;
     }
 }

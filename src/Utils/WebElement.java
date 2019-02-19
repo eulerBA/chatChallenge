@@ -60,8 +60,8 @@ public class WebElement {
         return driver.findElement(by).getText();
     }
 
-    public List<org.openqa.selenium.WebElement> findElements(By by) {
-        return null;
+    public static List<org.openqa.selenium.WebElement> findElements(WebDriver driver, By by) {
+        return driver.findElements(by);
     }
 
     public org.openqa.selenium.WebElement findElement(By by) {

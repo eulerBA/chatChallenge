@@ -6,9 +6,6 @@ import Pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.NoSuchElementException;
-
-
 public class Test1 extends BaseTest{
 
     private String username1 = "interview1";
@@ -81,7 +78,10 @@ public class Test1 extends BaseTest{
         ChatRoomPage chatRoomPage2 = homePage2.enterToRoom(r);
 
         chatRoomPage1.sendMessage(message1);
-        Assert.assertFalse(chatRoomPage1.isDuplicated(message1), "Message: " + message1 + "is duplicated");
+        Assert.assertFalse(chatRoomPage1.isDuplicated(message1), "Message: " + message1 + " is duplicated");
+
+        chatRoomPage1.sendMessage(message1);
+        Assert.assertTrue(chatRoomPage2.isDuplicated(message1),"Message: " + message1 + "is duplicated but could not find it");
 
         chatRoomPage2.sendMessage(message2);
         Assert.assertFalse(chatRoomPage2.isDuplicated(message2),"Message: " + message2 + "is duplicated");
@@ -90,9 +90,9 @@ public class Test1 extends BaseTest{
         Assert.assertTrue(chatRoomPage2.isDuplicated(message1),"Message: " + message1 + "is duplicated but could not find it");
     }
 
-    //@Test
-    public void SimulateUserBehaviorTest(){
-
-    }
+//    @Test
+//    public void SimulateUserBehaviorTest(){
+//
+//    }
 }
 

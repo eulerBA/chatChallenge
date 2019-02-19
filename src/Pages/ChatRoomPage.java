@@ -4,6 +4,10 @@ import Utils.WebElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class ChatRoomPage extends Page {
 
     By chatRoomName = By.cssSelector("div.chat-room");
@@ -39,6 +43,18 @@ public class ChatRoomPage extends Page {
     }
 
     public boolean isDuplicated(String msg) {
-        return driver.findElements(By.xpath("//div[@class='chat-history']//li/div[not(@class='message-data') and contains(.,"+msg+")]")).size()>1;
+        List<org.openqa.selenium.WebElement> elements = driver.findElements(By.xpath("//div[@class='chat-history']//li/div[not(@class='message-data')]"));
+        int count = 0;
+        if (elements.size() > 0) {
+            Iterator<org.openqa.selenium.WebElement> it = elements.iterator();
+            org.openqa.selenium.WebElement e;
+             while(it.hasNext()) {
+                 e = (org.openqa.selenium.WebElement) it.next();
+                if (e.getText().equals(msg)) {
+                    count++;
+                };
+            }
+        }
+     return count > 1;
     }
 }

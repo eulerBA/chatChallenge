@@ -11,32 +11,28 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    WebDriver driver1;
-    WebDriver driver2;
-    Page page1;
-    Page page2;
+    Map<Integer,WebDriver> drivers = new HashMap<Integer,WebDriver>();
+    Map<Integer,Page> pages = new HashMap<Integer,Page>();
     public static String baseUrl = "https://chatchallengeproj.herokuapp.com/";
     public final String r = getRandomNumber();
 
 
-    @BeforeMethod
-    public void setup(){
-         driver1 = new ChromeDriver();
-         driver2 = new ChromeDriver();
-         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-         driver2.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-         this.page1 = new Page(driver1);
-         this.page2 = new Page(driver2);
-
-         page1.navigateTo(baseUrl);
-         page2.navigateTo(baseUrl);
+    public void setup(int users){
+        WebDriver driver;
+        Page p;
+        for(int i=1; i<=users; i++) {
+            driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            p = new Page(driver);
+            drivers.put(i,driver);
+            pages.put(i,p);
+            p.navigateTo(baseUrl);
+        }
     }
 
     private String getRandomNumber(){
@@ -45,8 +41,12 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown(){
-        this.driver1.quit();
-        this.driver2.quit();
+        if (drivers != null & drivers.size() != 0){
+        for(int i=1; i<=drivers.size(); i++) {
+            WebDriver d = drivers.get(i);
+            d.quit();
+        }
+        }
     }
 
     public void sleep(int miliseconds) {

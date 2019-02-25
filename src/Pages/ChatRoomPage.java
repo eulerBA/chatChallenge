@@ -26,16 +26,17 @@ public class ChatRoomPage extends Page {
     }
 
     public String getChatNumUsers() {
+        //sleep(2000);
         return WebElement.getText(driver,chatNumUsers);
     }
 
     public ArrayList<String> listUsernames() {
-        ArrayList<String> allUsers = new ArrayList<String>();
+        ArrayList<String> allUsers = new ArrayList<>();
         List<org.openqa.selenium.WebElement> elements = WebElement.findElements(driver,listUsernames);
         Iterator<org.openqa.selenium.WebElement> it = elements.iterator();
         org.openqa.selenium.WebElement e;
         while(it.hasNext()) {
-            e = (org.openqa.selenium.WebElement) it.next();
+            e = it.next();
             allUsers.add(e.getText());
         }
         return allUsers;
@@ -44,7 +45,7 @@ public class ChatRoomPage extends Page {
     public void sendMessage(String msg){
         WebElement.sendKeys(driver, textArea, msg);
         WebElement.waitAndClickElement(driver,sendButton);
-        sleep(3000);
+        sleep(4000);
     }
 
     public String getMessageByPosition(int pos){
@@ -62,7 +63,7 @@ public class ChatRoomPage extends Page {
             Iterator<org.openqa.selenium.WebElement> it = elements.iterator();
             org.openqa.selenium.WebElement e;
              while(it.hasNext()) {
-                 e = (org.openqa.selenium.WebElement) it.next();
+                 e = it.next();
                 if (e.getText().equals(msg)) {
                     count++;
                     if (count > 1) return true;

@@ -57,6 +57,15 @@ public class WebElement {
     }
 
     public static String getText(WebDriver driver, By by) {
+        try {
+            (new WebDriverWait(driver, 10)).until(ExpectedConditions.visibilityOfElementLocated(by));
+            return driver.findElement(by).getText();}
+        catch (StaleElementReferenceException sere) {
+            return driver.findElement(by).getText();
+        }
+        catch (TimeoutException toe) {
+            System.out.println("Element identified by " + by.toString() + " could not get text after 10 seconds");
+        }
         return driver.findElement(by).getText();
     }
 

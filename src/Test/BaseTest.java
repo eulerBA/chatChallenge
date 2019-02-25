@@ -22,7 +22,12 @@ public class BaseTest {
     Map<Integer,WebDriver> drivers = new HashMap<Integer,WebDriver>();
     Map<Integer,Page> pages = new HashMap<Integer,Page>();
     public static String baseUrl = "https://chatchallengeproj.herokuapp.com/";
-    public final String r = getRandomNumber();
+    public String r;
+
+    @BeforeMethod
+    public void setupRandomVariable(){
+        r = getRandomNumber();
+    }
 
     public void setupTest(int users){
         WebDriver driver;

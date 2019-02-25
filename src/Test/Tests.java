@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class Test1 extends BaseTest{
+public class Tests extends BaseTest{
 
     private static String message1 = "MESSAGE_1";
     private static String message2 = "MESSAGE_2";
@@ -24,18 +24,15 @@ public class Test1 extends BaseTest{
         createAllRooms(homePages.get(1), rooms);
         ChatRoomPage chatRoomPage1 = homePages.get(1).enterToRoom("Room 1 " +r);
         Assert.assertEquals(chatRoomPage1.getChatRoomName(), "Room 1 " +r);
-        sleep(2000);
         Assert.assertEquals(chatRoomPage1.getChatNumUsers(), "1 User(s)");
 
         ChatRoomPage chatRoomPage2 = homePages.get(2).enterToRoom("Room 1 " +r);
         Assert.assertEquals(chatRoomPage2.getChatRoomName(), "Room 1 " +r);
-        sleep(2000);
         Assert.assertEquals(chatRoomPage2.getChatNumUsers(), "2 User(s)");
 
         chatRoomPage1.sendMessage(message1);
-        sleep(1000);
         chatRoomPage2.sendMessage(message2);
-        sleep(1000);
+
         Assert.assertEquals(chatRoomPage1.getMessageByPosition(1), message1);
         Assert.assertEquals(chatRoomPage1.getMessageByPosition(2), message2);
         Assert.assertEquals(chatRoomPage2.getMessageByPosition(1), message1);
@@ -48,14 +45,12 @@ public class Test1 extends BaseTest{
         Map<Integer, LoginPage> loginPages = createAllUsers();
         Map<Integer, HomePage> homePages = loginAllUsers(loginPages);
         createAllRooms(homePages.get(1), rooms);
+
         ChatRoomPage chatRoomPage1 = homePages.get(1).enterToRoom("Room 1 " +r);
-        sleep(3000);
         chatRoomPage1.sendMessage(message1);
-        sleep(1000);
         chatRoomPage1.sendMessage(message2);
-        sleep(1000);
         chatRoomPage1.sendMessage(message3);
-        sleep(1000);
+
         Assert.assertEquals(chatRoomPage1.getAmountOfMessages(), 3);
 
         ChatRoomPage chatRoomPage2 = homePages.get(2).enterToRoom("Room 1 " +r);
@@ -85,15 +80,13 @@ public class Test1 extends BaseTest{
     }
 
     @Test(dataProvider = "dataProviderTest4")
-    public void SimulateUserBehaviorTest(int users, int rooms){
+    public void simulateUserBehaviorTest(int users, int rooms){
         setupTest(users);
         Map<Integer, LoginPage> loginPages = createAllUsers();
         Map<Integer, HomePage> homePages = loginAllUsers(loginPages);
         createAllRooms(homePages.get(1), rooms);
         Map<Integer, ChatRoomPage> chatRoomPages = enterToRoomAllUsers(homePages, rooms);
     }
-
-
 
     /*DATA PROVIDERS*/
     @DataProvider(name = "dataProviderTest123")
@@ -103,7 +96,7 @@ public class Test1 extends BaseTest{
 
     @DataProvider(name = "dataProviderTest4")
     public Object[][] dataProvider4() {
-        return new Object[][] { { 3, 1}};
+        return new Object[][] { { 8, 4}};
     }
 }
 
